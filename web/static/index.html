@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story Video Generator</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎬 Story Video Generator</h1>
+            <p class="subtitle">Transform your stories into engaging vertical videos</p>
+        </header>
+
+        <div class="main-grid">
+            <section class="panel story-panel">
+                <div class="panel-header">
+                    <h2>📚 Select Story</h2>
+                    <button id="refreshStories" class="btn-icon" title="Refresh">🔄</button>
+                </div>
+                
+                <div class="search-box">
+                    <input type="text" id="storySearch" placeholder="Search stories...">
+                </div>
+
+                <div id="storiesList" class="stories-list">
+                    <div class="loading">Loading stories...</div>
+                </div>
+
+                <div class="upload-section">
+                    <label for="fileUpload" class="upload-label">
+                        <span>📤 Upload story.json</span>
+                        <input type="file" id="fileUpload" accept=".json" hidden>
+                    </label>
+                </div>
+            </section>
+
+            <section class="panel config-panel">
+                <h2>⚙️ Configuration</h2>
+
+                <div class="form-group">
+                    <label>Selected Story</label>
+                    <div id="selectedStoryDisplay" class="selected-story">
+                        <span class="placeholder">No story selected</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Render Preset</label>
+                    <div id="presetButtons" class="preset-buttons"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Voice</label>
+                    <select id="voiceSelect" class="form-control"></select>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        Background Music (optional)
+                        <input type="file" id="musicUpload" accept=".mp3,.wav,.m4a">
+                    </label>
+                </div>
+
+                <button id="generateBtn" class="btn-primary" disabled>
+                    ▶️ Generate Video
+                </button>
+
+                <div id="estimatedTime" class="estimated-time" style="display: none;">
+                    ⏱️ Estimated time: <span id="estimateValue">~30s</span>
+                </div>
+            </section>
+
+            <section class="panel jobs-panel">
+                <div class="panel-header">
+                    <h2>📊 Render Queue</h2>
+                    <button id="clearCompleted" class="btn-icon" title="Clear completed">🗑️</button>
+                </div>
+                
+                <div id="jobsList" class="jobs-list">
+                    <div class="empty-state">
+                        <p>No renders yet</p>
+                        <p class="hint">Select a story and click "Generate Video" to start</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+# Core CLI / config / validation
+typer[all]>=0.12
+rich>=13.7
+pydantic>=2.6
+PyYAML>=6.0
+python-dotenv>=1.0
+
+# Networking (TTS API calls, image downloads)
+requests>=2.31
+
+# Frame buffer manipulation / imaging
+numpy>=1.26
+Pillow>=10.3          # see README for libraqm/HarfBuzz setup notes
+
+# Audio duration / manipulation
+soundfile>=0.12
+pydub>=0.25
+
+# RTL shaping + bidi algorithm (Arabic, Hebrew, etc.)
+arabic-reshaper>=3.0
+python-bidi>=0.4
+
+# --- System dependency (not installable via pip) ---
+# ffmpeg must be installed and on PATH. See README for install instructions.

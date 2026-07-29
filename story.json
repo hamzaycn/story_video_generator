@@ -1,0 +1,30 @@
+{
+  "id": "story_123",
+  "title": "Luna and the Talking Tree",
+  "category": "adventure",
+  "language": "en-US",
+  "coverImageUrl": "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1600",
+  "imageMode": "single_cover",
+  "scenes": [
+    {
+      "sceneNumber": 1,
+      "text": "One sunny morning, Luna skipped into the emerald forest, her curious eyes sparkling with wonder at every rustling leaf."
+    },
+    {
+      "sceneNumber": 2,
+      "text": "Deep among the mossy roots, she found an ancient oak tree with a face carved by time itself, and it slowly opened its eyes."
+    },
+    {
+      "sceneNumber": 3,
+      "text": "\"Hello, little one,\" the tree whispered warmly. \"I have been waiting a hundred years for a friend as brave as you.\""
+    },
+    {
+      "sceneNumber": 4,
+      "text": "Luna smiled and sat beneath its branches, and together they watched fireflies dance as the tree told tales of long ago."
+    },
+    {
+      "sceneNumber": 5,
+      "text": "From that day on, Luna visited every morning, and the forest never felt quiet or lonely again."
+    }
+  ]
+}
