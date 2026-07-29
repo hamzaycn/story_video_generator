@@ -152,7 +152,7 @@ def xfade_concat_videos(clip_paths: List[Path], durations: List[float], td: floa
     cmd = inputs + [
         "-filter_complex", ";".join(filter_parts),
         "-map", "[vout]",
-        "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-pix_fmt", "yuv420p",
+        *_video_encode_args(output_cfg),
         str(out_path),
     ]
     run_ffmpeg(cmd, desc="xfade concat")
@@ -302,11 +302,18 @@ def _brand_font(fonts_dir: Path, cfg: AppConfig, language: str, size: int) -> Im
     return ImageFont.truetype(str(path), size=size)
 
 
-def render_intro_video_clip(story, cfg: AppConfig, out_path: Path) -> Path:
-    """Branded animated title card: logo, story title, category badge, scene count."""
+from PIL import ImageOps  # add to imports
+
+def render_intro_video_clip(
+    story, cfg: AppConfig, out_path: Path,
+    duration: Optional[float] = None,
+    cover_image: Optional[Image.Image] = None,
+) -> Path:
+    """Branded animated title card: cover image backdrop (if provided),
+    logo, story title, category badge, scene count."""
     width, height = cfg.resolution.width, cfg.resolution.height
     fps = cfg.resolution.fps
-    duration = cfg.brand.intro_duration
+    duration = duration if duration is not None else cfg.brand.intro_duration
     n_frames = max(int(round(duration * fps)), 1)
     fonts_dir = Path(cfg.paths.assets_dir) / "fonts"
 
@@ -314,25 +321,54 @@ def render_intro_video_clip(story, cfg: AppConfig, out_path: Path) -> Path:
     if cfg.brand.logo_path and Path(cfg.brand.logo_path).exists():
         logo = Image.open(cfg.brand.logo_path).convert("RGBA")
 
+    cover_bg = None
+    if cover_image is not None:
+        # Fill-crop the cover art to the full 1080x1920 canvas (same "fill,
+        # don't letterbox" treatment as scene Ken Burns frames).
+        cover_bg = ImageOps.fit(cover_image.convert("RGB"), (width, height), Image.LANCZOS)
+
     def frame_gen():
         for i in range(n_frames):
             t = i / max(n_frames - 1, 1)
-            eased = ease_in_out_cubic(min(t / 0.6, 1.0))  # entrance completes at 60% through
+            eased = ease_in_out_cubic(min(t / 0.6, 1.0))
             fade = eased
             scale = 0.85 + 0.15 * eased
 
-            frame = Image.new("RGBA", (width, height), (*cfg.brand.background_color, 255))
+            if cover_bg is not None:
+                frame = cover_bg.convert("RGBA").copy()
+                # Dark gradient overlay over the lower 2/3 so text stays legible
+                # over an arbitrary bright/busy cover image.
+                grad = Image.new("L", (1, height), 0)
+                grad_top = height // 3
+                for y in range(height):
+                    if y < grad_top:
+                        grad.putpixel((0, y), 0)
+                    else:
+                        a = int(210 * ((y - grad_top) / (height - grad_top)) * fade)
+                        grad.putpixel((0, y), a)
+                grad = grad.resize((width, height))
+                shade = Image.new("RGBA", (width, height), (0, 0, 0, 255))
+                shade.putalpha(grad)
+                frame = Image.alpha_composite(frame, shade)
+            else:
+                frame = Image.new("RGBA", (width, height), (*cfg.brand.background_color, 255))
+
             draw = ImageDraw.Draw(frame)
-            draw.rectangle([0, 0, width, height // 3], fill=(*cfg.brand.primary_color, 40))
+            if cover_bg is None:
+                draw.rectangle([0, 0, width, height // 3], fill=(*cfg.brand.primary_color, 40))
 
             title_font = _brand_font(fonts_dir, cfg, story.language, int(74 * scale))
             cat_font = _brand_font(fonts_dir, cfg, story.language, int(36 * scale))
 
-            cy = height // 2
+            # Text sits in the lower third, over the darkened gradient area.
+            cy = int(height * 0.68)
+
             if logo:
-                logo_resized = logo.resize((int(220 * scale), int(220 * scale)))
+                logo_size = int(140 * scale) if cover_bg is not None else int(220 * scale)
+                logo_resized = logo.resize((logo_size, logo_size))
                 tmp = Image.new("RGBA", frame.size, (0, 0, 0, 0))
-                tmp.paste(logo_resized, ((width - logo_resized.width) // 2, cy - 340), logo_resized)
+                top_y = 80 if cover_bg is not None else cy - 340
+                tmp.paste(logo_resized, ((width - logo_resized.width) // 2, top_y), logo_resized)
                 alpha = tmp.split()[3].point(lambda p: int(p * fade))
                 tmp.putalpha(alpha)
                 frame = Image.alpha_composite(frame, tmp)
@@ -361,7 +397,6 @@ def render_intro_video_clip(story, cfg: AppConfig, out_path: Path) -> Path:
             yield frame.convert("RGB")
 
     return frames_to_video(frame_gen(), width, height, fps, out_path, cfg.output)
-
 
 def render_outro_video_clip(cfg: AppConfig, language: str, out_path: Path) -> Path:
     """Branded CTA card: logo, app name, download message, optional QR/app-badge slot."""
@@ -455,6 +490,7 @@ def assemble_video(
     story, resolved_scene_images: Dict[int, Image.Image], cfg: AppConfig,
     music_path: Optional[Path], voice: str, out_path: Path,
     work_dir: Path, progress_cb: ProgressCallback = None,
+    cover_image: Optional[Image.Image] = None,     # NEW
 ) -> Path:
     """
     Full pipeline: TTS -> per-scene render -> intro/outro -> crossfade
@@ -474,10 +510,39 @@ def assemble_video(
     cache = CacheManager(Path(cfg.paths.cache_dir))
     provider = get_tts_provider(story.language)
 
+   # --- Intro narration (NEW) ---
+    intro_duration = cfg.brand.intro_duration
+    intro_audio_path = work_dir / "intro_audio.wav"
+    if cfg.brand.narrate_intro:
+        try:
+            report("Synthesizing intro narration", 1, 1)
+            intro_text = cfg.brand.intro_narration_template.format(
+                title=story.title, category=story.category,
+            )
+            intro_raw = cache.audio_cache_path(intro_text, voice, provider.name, story.language)
+            if not cache.is_cached(intro_raw):
+                provider.synthesize(intro_text, story.language, voice, out_path=intro_raw)
+            with sf.SoundFile(str(intro_raw)) as f:
+                intro_narration_duration = len(f) / f.samplerate
+
+            # give the entrance animation room: floor is config, but stretch
+            # to fit the narration + a little breathing room at the end.
+            intro_duration = max(cfg.brand.intro_duration, intro_narration_duration + 0.6)
+            if intro_duration > intro_narration_duration + 0.01:
+                pad_audio_to_duration(intro_raw, intro_duration, intro_audio_path)
+            else:
+                shutil.copyfile(intro_raw, intro_audio_path)
+        except Exception as e:
+            logger.warning("Intro narration failed (%s) -- falling back to silent intro.", e)
+            intro_duration = cfg.brand.intro_duration
+            make_silence_wav(intro_duration, intro_audio_path)
+    else:
+        make_silence_wav(intro_duration, intro_audio_path)
+
     scenes = story.sorted_scenes
     scene_infos: List[SceneRenderInfo] = []
     srt_entries = []
-    running_time = cfg.brand.intro_duration - cfg.timing.transition_duration_s
+    running_time = intro_duration - cfg.timing.transition_duration_s   # was cfg.brand.intro_duration
 
     for idx, scene in enumerate(scenes):
         report("Synthesizing narration", idx + 1, len(scenes))
@@ -512,8 +577,7 @@ def assemble_video(
 
     report("Rendering intro", 1, 1)
     intro_path = work_dir / "intro.mp4"
-    render_intro_video_clip(story, cfg, intro_path)
-    intro_silence = make_silence_wav(cfg.brand.intro_duration, work_dir / "intro_silence.wav")
+    render_intro_video_clip(story, cfg, intro_path, duration=intro_duration, cover_image=cover_image)  # CHANGED
 
     report("Rendering outro", 1, 1)
     outro_path = work_dir / "outro.mp4"
@@ -521,15 +585,15 @@ def assemble_video(
     outro_silence = make_silence_wav(cfg.brand.outro_duration, work_dir / "outro_silence.wav")
 
     all_video_paths = [intro_path] + [s.video_path for s in scene_infos] + [outro_path]
-    all_durations = [cfg.brand.intro_duration] + [s.duration for s in scene_infos] + [cfg.brand.outro_duration]
-    all_audio_paths = [intro_silence] + [s.audio_path for s in scene_infos] + [outro_silence]
+    all_durations = [intro_duration] + [s.duration for s in scene_infos] + [cfg.brand.outro_duration]   # CHANGED
+    all_audio_paths = [intro_audio_path] + [s.audio_path for s in scene_infos] + [outro_silence]         # CHANGED
 
     td = cfg.timing.transition_duration_s
     total_duration = sum(all_durations) - td * (len(all_durations) - 1)
 
     report("Compositing transitions", 1, 2)
-    concatenated_video = xfade_concat_videos(all_video_paths, all_durations, td, work_dir / "concatenated_video.mp4")
-
+    concatenated_video = xfade_concat_videos(all_video_paths, all_durations, td,
+                                              work_dir / "concatenated_video.mp4", cfg.output)  # CHANGED (pass cfg.output)
     report("Compositing transitions", 2, 2)
     concatenated_audio = acrossfade_concat_audios(all_audio_paths, td, work_dir / "concatenated_narration.wav")
 
@@ -548,3 +612,11 @@ def assemble_video(
 
     write_srt(srt_entries, out_path.with_suffix(".srt"))
     return out_path
+
+def _video_encode_args(output_cfg) -> List[str]:
+    codec = getattr(output_cfg, "video_codec", "libx264")
+    if codec == "h264_nvenc":
+        return ["-c:v", "h264_nvenc", "-preset", output_cfg.preset,
+                 "-cq", str(output_cfg.crf), "-b:v", "0", "-pix_fmt", "yuv420p"]
+    return ["-c:v", codec, "-preset", output_cfg.preset,
+             "-crf", str(output_cfg.crf), "-pix_fmt", "yuv420p"]

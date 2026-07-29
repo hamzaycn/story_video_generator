@@ -16,6 +16,7 @@ from pathlib import Path
 from typing import List, Optional
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
+from urllib.parse import urlparse
 
 logger = logging.getLogger("story_video_generator")
 
@@ -104,4 +105,27 @@ def load_story(path: Path) -> Story:
         "Loaded story '%s' (id=%s): %d scene(s), language=%s, imageMode=%s",
         story.title, story.id, len(story.scenes), story.language, story.image_mode.value,
     )
+    return story
+
+
+def resolve_local_paths(story: Story, base_dir: Path) -> Story:
+    """
+    story.json ships with relative local paths like 'assets/images/cover.png'
+    meant relative to the *story folder*, not the process cwd. Rewrite any
+    non-URL image path to an absolute path before anything downstream
+    (image_manager) touches it.
+    """
+    base_dir = Path(base_dir).resolve()
+
+    def resolve(src: Optional[str]) -> Optional[str]:
+        if not src:
+            return src
+        if urlparse(src).scheme in ("http", "https"):
+            return src  # remote URL, leave as-is
+        p = Path(src)
+        return str(p if p.is_absolute() else (base_dir / p).resolve())
+
+    story.cover_image_url = resolve(story.cover_image_url)
+    for scene in story.scenes:
+        scene.image_url = resolve(scene.image_url)
     return story

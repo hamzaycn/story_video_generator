@@ -31,7 +31,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 from core.cache import CacheManager  # noqa: E402
 from core.config import AppConfig, load_config  # noqa: E402
 from core.image_manager import get_image  # noqa: E402
-from core.story_loader import load_story  # noqa: E402
+from core.story_loader import load_story , resolve_local_paths # noqa: E402
 from core.subtitles import resolve_font_path  # noqa: E402
 from core.tts.base import TTSError, UnsupportedLanguageError  # noqa: E402
 from core.tts.factory import get_tts_provider  # noqa: E402
@@ -72,6 +72,7 @@ def main(
     # --- 1. Story validation ---
     try:
         story_data = load_story(story)
+        story_data = resolve_local_paths(story_data, story.parent)   # NEW
     except Exception as e:
         console.print(f"[bold red]Story validation failed:[/bold red] {e}")
         raise typer.Exit(code=1)
@@ -112,6 +113,15 @@ def main(
             )
             resolved_images[scene.scene_number] = img
             progress.advance(task)
+        cover_image = None
+        if story_data.cover_image_url:
+            console.print("[cyan]Resolving cover image for intro...[/cyan]")
+            cover_image = get_image(
+                story_data.cover_image_url, cache, brand_color=tuple(cfg.brand.primary_color),
+                label="Cover", fonts_dir=fonts_dir,
+                placeholder_size=(cfg.resolution.width, cfg.resolution.height),
+            )
+
 
     # --- 5. Dry run: validate + estimate, skip rendering ---
     if dry_run:
@@ -142,6 +152,7 @@ def main(
             result_path = assemble_video(
                 story_data, resolved_images, cfg, music, resolved_voice, output,
                 work_dir=Path(tmp), progress_cb=progress_cb,
+                cover_image=cover_image,   # NEW
             )
         except TTSError as e:
             console.print(f"[bold red]TTS error:[/bold red] {e}")

@@ -48,7 +48,7 @@ class FontsConfigModel(BaseModel):
 
 
 class BrandConfigModel(BaseModel):
-    app_name: str = "Kids AI Stories"
+    app_name: str = "StoryTime"
     primary_color: Tuple[int, int, int] = (91, 62, 224)
     secondary_color: Tuple[int, int, int] = (255, 176, 59)
     background_color: Tuple[int, int, int] = (18, 14, 38)
@@ -56,9 +56,11 @@ class BrandConfigModel(BaseModel):
     logo_path: Optional[str] = "assets/branding/logo.png"
     qr_code_path: Optional[str] = None
     cta_text: str = "Download the app to create your own stories!"
-    title_font: Optional[str] = None  # falls back to per-script default if unset
-    intro_duration: float = 3.0
+    title_font: Optional[str] = None
+    intro_duration: float = 3.0     # floor -- real duration will stretch to fit narration
     outro_duration: float = 4.0
+    narrate_intro: bool = True                                     # NEW
+    intro_narration_template: str = "{title}. A {category} story."  # NEW
 
 
 class AudioConfigModel(BaseModel):
@@ -109,40 +111,3 @@ def load_config(path: Optional[Path]) -> AppConfig:
     with path.open("r", encoding="utf-8") as f:
         raw = yaml.safe_load(f) or {}
     return AppConfig.model_validate(raw)
-
-# Add to config.py:
-
-def load_config(path: Optional[Path], preset: Optional[str] = None) -> AppConfig:
-    """Load config.yaml, optionally applying a preset first."""
-    base_config = {}
-    
-    # Load base config
-    if path and path.exists():
-        with path.open("r", encoding="utf-8") as f:
-            base_config = yaml.safe_load(f) or {}
-    
-    # Apply preset if specified
-    if preset:
-        presets_path = Path(__file__).parent.parent / "presets.yaml"
-        if presets_path.exists():
-            with presets_path.open("r", encoding="utf-8") as f:
-                presets = yaml.safe_load(f) or {}
-                if preset in presets:
-                    # Deep merge preset into base config
-                    base_config = _deep_merge(base_config, presets[preset])
-                    logger.info(f"Applied preset: {preset}")
-                else:
-                    logger.warning(f"Preset '{preset}' not found in {presets_path}")
-    
-    return AppConfig.model_validate(base_config)
-
-
-def _deep_merge(base: dict, override: dict) -> dict:
-    """Deep merge override into base."""
-    result = base.copy()
-    for key, value in override.items():
-        if key in result and isinstance(result[key], dict) and isinstance(value, dict):
-            result[key] = _deep_merge(result[key], value)
-        else:
-            result[key] = value
-    return result

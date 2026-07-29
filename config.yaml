@@ -44,6 +44,8 @@ brand:
   title_font: null                       # falls back to per-script default if unset
   intro_duration: 3.0
   outro_duration: 4.0
+  narrate_intro: true
+  intro_narration_template: "{title}. A {category} story."
 
 audio:
   music_duck_db: -18.0
@@ -52,10 +54,12 @@ audio:
   narration_gain_db: 0.0
 
 output:
-  video_bitrate: "8M"
-  audio_bitrate: "192k"
-  crf: 18
-  preset: medium
+  # video_bitrate: "8M"
+  # audio_bitrate: "192k"
+  # crf: 18
+  # preset: medium
+  preset: veryfast   # was "medium" — biggest single lever, ~2-4x faster encode
+  crf: 20    
 
 timing:
   min_scene_duration_s: 3.0
