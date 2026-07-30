@@ -69,11 +69,13 @@ class KokoroTTSProvider(TTSProvider):
                 raise TTSRequestError(f"Kokoro produced no audio for text: {text[:80]!r}")
             full_audio = np.concatenate(chunks) if len(chunks) > 1 else chunks[0]
 
-            # Atomic write -- synthesize to a temp file, then rename, so a
+            # Atomic write: synthesize to a temp file, then rename, so a
             # killed process never leaves a corrupt/partial file that
             # cache.is_cached() would mistake for a valid cache hit.
-            tmp_path = out_path.with_suffix(out_path.suffix + ".part")
-            sf.write(str(tmp_path), full_audio, self.sample_rate)
+            # format="WAV" is explicit -- don't rely on soundfile guessing
+            # from the temp filename's extension.
+            tmp_path = out_path.with_name(out_path.name + ".part")
+            sf.write(str(tmp_path), full_audio, self.sample_rate, format="WAV")
             tmp_path.replace(out_path)
             return out_path
 
