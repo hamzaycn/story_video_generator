@@ -125,7 +125,8 @@ def pad_audio_to_duration(audio_path: Path, target_duration: float, out_path: Pa
     return out_path
 
 
-def xfade_concat_videos(clip_paths: List[Path], durations: List[float], td: float, out_path: Path) -> Path:
+def xfade_concat_videos(clip_paths: List[Path], durations: List[float], td: float,
+                          out_path: Path, output_cfg) -> Path:
     """Chain ffmpeg `xfade` crossfades across N silent video clips."""
     n = len(clip_paths)
     out_path = Path(out_path)
