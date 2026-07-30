@@ -86,6 +86,32 @@ class Story(BaseModel):
     def sorted_scenes(self) -> List[Scene]:
         return sorted(self.scenes, key=lambda s: s.scene_number)
 
+from urllib.parse import urlparse  # add to your existing imports at top of file
+
+
+def resolve_local_paths(story: Story, base_dir: Path) -> Story:
+    """
+    story.json ships with paths like 'assets/images/cover.png' meant
+    relative to the *story folder* it lives in, not the process's cwd.
+    Rewrite every non-URL image path to an absolute path so image_manager
+    can find it regardless of where the script is invoked from.
+    """
+    base_dir = Path(base_dir).resolve()
+
+    def resolve(src: Optional[str]) -> Optional[str]:
+        if not src:
+            return src
+        if urlparse(src).scheme in ("http", "https"):
+            return src  # remote URL -- leave untouched
+        p = Path(src)
+        resolved = p if p.is_absolute() else (base_dir / p).resolve()
+        return str(resolved)
+
+    story.cover_image_url = resolve(story.cover_image_url)
+    for scene in story.scenes:
+        scene.image_url = resolve(scene.image_url)
+    return story
+
 
 def load_story(path: Path) -> Story:
     """Load and validate a story JSON file, raising a descriptive error on failure."""
@@ -107,25 +133,3 @@ def load_story(path: Path) -> Story:
     )
     return story
 
-
-def resolve_local_paths(story: Story, base_dir: Path) -> Story:
-    """
-    story.json ships with relative local paths like 'assets/images/cover.png'
-    meant relative to the *story folder*, not the process cwd. Rewrite any
-    non-URL image path to an absolute path before anything downstream
-    (image_manager) touches it.
-    """
-    base_dir = Path(base_dir).resolve()
-
-    def resolve(src: Optional[str]) -> Optional[str]:
-        if not src:
-            return src
-        if urlparse(src).scheme in ("http", "https"):
-            return src  # remote URL, leave as-is
-        p = Path(src)
-        return str(p if p.is_absolute() else (base_dir / p).resolve())
-
-    story.cover_image_url = resolve(story.cover_image_url)
-    for scene in story.scenes:
-        scene.image_url = resolve(scene.image_url)
-    return story
