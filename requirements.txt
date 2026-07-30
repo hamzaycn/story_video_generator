@@ -19,6 +19,9 @@ pydub>=0.25
 # RTL shaping + bidi algorithm (Arabic, Hebrew, etc.)
 arabic-reshaper>=3.0
 python-bidi>=0.4
+kokoro
+soundfile
+numpy
 
 # --- System dependency (not installable via pip) ---
 # ffmpeg must be installed and on PATH. See README for install instructions.

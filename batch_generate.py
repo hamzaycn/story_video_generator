@@ -69,6 +69,13 @@ def main(
 
     for i, story_dir in enumerate(story_dirs, start=1):
         story_path = story_dir / "story.json"
+        out_path = out_root / f"{story_dir.name}.mp4"
+
+        if out_path.exists() and out_path.stat().st_size > 0:
+            console.print(f"[yellow]({i}/{len(story_dirs)}) {story_dir.name} -- already rendered, skipping[/yellow]")
+            results["ok"].append(story_dir.name)
+            continue
+
         console.rule(f"[bold cyan]({i}/{len(story_dirs)}) {story_dir.name}")
         try:
             story_data = load_story(story_path)

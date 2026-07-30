@@ -400,13 +400,46 @@ def render_intro_video_clip(
     return frames_to_video(frame_gen(), width, height, fps, out_path, cfg.output)
 
 def render_outro_video_clip(cfg: AppConfig, language: str, out_path: Path) -> Path:
-    """Branded CTA card: logo, app name, download message, optional QR/app-badge slot."""
+    """Branded CTA card. If `brand.outro_card_path` is set, fades in that
+    pre-made image as-is (contain, not crop, so nothing gets cut off) --
+    the intended path now that the QR/app-preview card is designed
+    externally. Falls back to the old programmatic logo+text+QR layout if
+    no card image is configured."""
     width, height = cfg.resolution.width, cfg.resolution.height
     fps = cfg.resolution.fps
     duration = cfg.brand.outro_duration
     n_frames = max(int(round(duration * fps)), 1)
-    fonts_dir = Path(cfg.paths.assets_dir) / "fonts"
 
+    card_path = cfg.brand.outro_card_path
+    card_image = Image.open(card_path).convert("RGBA") if card_path and Path(card_path).exists() else None
+
+    if card_image is not None:
+        # Contain-fit (letterbox, not crop) so QR codes/text never get cut off.
+        card_ratio = card_image.width / card_image.height
+        target_ratio = width / height
+        if card_ratio > target_ratio:
+            new_w, new_h = width, int(width / card_ratio)
+        else:
+            new_h, new_w = height, int(height * card_ratio)
+        resized_card = card_image.resize((new_w, new_h), Image.LANCZOS)
+        paste_x, paste_y = (width - new_w) // 2, (height - new_h) // 2
+        bg = Image.new("RGBA", (width, height), (*cfg.brand.background_color, 255))
+
+        def frame_gen():
+            for i in range(n_frames):
+                t = i / max(n_frames - 1, 1)
+                fade = ease_in_out_cubic(min(t / 0.4, 1.0))
+                frame = bg.copy()
+                layer = Image.new("RGBA", (width, height), (0, 0, 0, 0))
+                layer.paste(resized_card, (paste_x, paste_y), resized_card)
+                alpha = layer.split()[3].point(lambda p: int(p * fade))
+                layer.putalpha(alpha)
+                frame = Image.alpha_composite(frame, layer)
+                yield frame.convert("RGB")
+
+        return frames_to_video(frame_gen(), width, height, fps, out_path, cfg.output)
+
+    # --- fallback: old programmatic logo/app-name/CTA/QR-placeholder layout ---
     logo = None
     if cfg.brand.logo_path and Path(cfg.brand.logo_path).exists():
         logo = Image.open(cfg.brand.logo_path).convert("RGBA")
@@ -414,11 +447,12 @@ def render_outro_video_clip(cfg: AppConfig, language: str, out_path: Path) -> Pa
     if cfg.brand.qr_code_path and Path(cfg.brand.qr_code_path).exists():
         qr = Image.open(cfg.brand.qr_code_path).convert("RGBA")
 
+    fonts_dir = Path(cfg.paths.assets_dir) / "fonts"
+
     def frame_gen():
         for i in range(n_frames):
             t = i / max(n_frames - 1, 1)
             fade = ease_in_out_cubic(min(t / 0.4, 1.0))
-
             frame = Image.new("RGBA", (width, height), (*cfg.brand.background_color, 255))
             draw = ImageDraw.Draw(frame)
 
@@ -449,7 +483,6 @@ def render_outro_video_clip(cfg: AppConfig, language: str, out_path: Path) -> Pa
                            fill=(*cfg.brand.text_color, int(230 * fade)))
                 y += lh + 16
 
-            # Optional QR code / app store badge placeholder area.
             box_size = 260
             box_x0, box_y0 = (width - box_size) / 2, y + 60
             if qr:
@@ -473,7 +506,6 @@ def render_outro_video_clip(cfg: AppConfig, language: str, out_path: Path) -> Pa
 
     return frames_to_video(frame_gen(), width, height, fps, out_path, cfg.output)
 
-
 # ----------------------------------------------------------------------------
 # Top-level orchestration
 # ----------------------------------------------------------------------------
@@ -487,11 +519,13 @@ class SceneRenderInfo:
     video_path: Path
 
 
+
 def assemble_video(
     story, resolved_scene_images: Dict[int, Image.Image], cfg: AppConfig,
     music_path: Optional[Path], voice: str, out_path: Path,
     work_dir: Path, progress_cb: ProgressCallback = None,
-    cover_image: Optional[Image.Image] = None,     # NEW
+    cover_image: Optional[Image.Image] = None,
+    audio_export_dir: Optional[Path] = None,   # NEW
 ) -> Path:
     """
     Full pipeline: TTS -> per-scene render -> intro/outro -> crossfade
@@ -511,7 +545,7 @@ def assemble_video(
     cache = CacheManager(Path(cfg.paths.cache_dir))
     provider = get_tts_provider(story.language)
 
-   # --- Intro narration (NEW) ---
+    # --- Intro narration ---
     intro_duration = cfg.brand.intro_duration
     intro_audio_path = work_dir / "intro_audio.wav"
     if cfg.brand.narrate_intro:
@@ -523,11 +557,22 @@ def assemble_video(
             intro_raw = cache.audio_cache_path(intro_text, voice, provider.name, story.language)
             if not cache.is_cached(intro_raw):
                 provider.synthesize(intro_text, story.language, voice, out_path=intro_raw)
+            
+            # Export raw intro audio if requested (NEW)
+            if audio_export_dir is not None:
+                audio_export_dir = Path(audio_export_dir)
+                audio_export_dir.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(intro_raw, audio_export_dir / "intro.wav")
+
             with sf.SoundFile(str(intro_raw)) as f:
                 intro_narration_duration = len(f) / f.samplerate
 
-            # give the entrance animation room: floor is config, but stretch
-            # to fit the narration + a little breathing room at the end.
+            # Prepend a short lead-in silence
+            lead = cfg.timing.intro_lead_silence_s
+            intro_with_lead = work_dir / "intro_with_lead.wav"
+            concat_audio_silence_then_clip(lead, intro_raw, intro_with_lead)
+
+            # give the entrance animation room
             intro_duration = max(cfg.brand.intro_duration, intro_narration_duration + 0.6)
             if intro_duration > intro_narration_duration + 0.01:
                 pad_audio_to_duration(intro_raw, intro_duration, intro_audio_path)
@@ -543,7 +588,7 @@ def assemble_video(
     scenes = story.sorted_scenes
     scene_infos: List[SceneRenderInfo] = []
     srt_entries = []
-    running_time = intro_duration - cfg.timing.transition_duration_s   # was cfg.brand.intro_duration
+    running_time = intro_duration - cfg.timing.transition_duration_s
 
     for idx, scene in enumerate(scenes):
         report("Synthesizing narration", idx + 1, len(scenes))
@@ -552,6 +597,12 @@ def assemble_video(
             provider.synthesize(scene.text, story.language, voice, out_path=audio_cache_path)
         else:
             logger.info("Using cached narration for scene %d", scene.scene_number)
+
+        # Export scene audio if requested (NEW)
+        if audio_export_dir is not None:
+            audio_export_dir = Path(audio_export_dir)
+            audio_export_dir.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(audio_cache_path, audio_export_dir / f"scene_{scene.scene_number}.wav")
 
         with sf.SoundFile(str(audio_cache_path)) as f:
             raw_duration = len(f) / f.samplerate
@@ -578,7 +629,17 @@ def assemble_video(
 
     report("Rendering intro", 1, 1)
     intro_path = work_dir / "intro.mp4"
-    render_intro_video_clip(story, cfg, intro_path, duration=intro_duration, cover_image=cover_image)  # CHANGED
+    render_intro_video_clip(story, cfg, intro_path, duration=intro_duration, cover_image=cover_image)
+    
+    # short static pause before the branding card
+    pause_duration = cfg.timing.outro_lead_pause_s
+    pause_path = None
+    pause_silence = None
+    if pause_duration > 0 and scene_infos:
+        last_scene_number = scenes[-1].scene_number
+        pause_path = work_dir / "pause.mp4"
+        render_pause_clip(resolved_scene_images[last_scene_number], pause_duration, cfg, pause_path)
+        pause_silence = make_silence_wav(pause_duration, work_dir / "pause_silence.wav")
 
     report("Rendering outro", 1, 1)
     outro_path = work_dir / "outro.mp4"
@@ -586,15 +647,15 @@ def assemble_video(
     outro_silence = make_silence_wav(cfg.brand.outro_duration, work_dir / "outro_silence.wav")
 
     all_video_paths = [intro_path] + [s.video_path for s in scene_infos] + [outro_path]
-    all_durations = [intro_duration] + [s.duration for s in scene_infos] + [cfg.brand.outro_duration]   # CHANGED
-    all_audio_paths = [intro_audio_path] + [s.audio_path for s in scene_infos] + [outro_silence]         # CHANGED
+    all_durations = [intro_duration] + [s.duration for s in scene_infos] + [cfg.brand.outro_duration]
+    all_audio_paths = [intro_audio_path] + [s.audio_path for s in scene_infos] + [outro_silence]
 
     td = cfg.timing.transition_duration_s
     total_duration = sum(all_durations) - td * (len(all_durations) - 1)
 
     report("Compositing transitions", 1, 2)
     concatenated_video = xfade_concat_videos(all_video_paths, all_durations, td,
-                                              work_dir / "concatenated_video.mp4", cfg.output)  # CHANGED (pass cfg.output)
+                                              work_dir / "concatenated_video.mp4", cfg.output)
     report("Compositing transitions", 2, 2)
     concatenated_audio = acrossfade_concat_audios(all_audio_paths, td, work_dir / "concatenated_narration.wav")
 
@@ -613,7 +674,6 @@ def assemble_video(
 
     write_srt(srt_entries, out_path.with_suffix(".srt"))
     return out_path
-
 def _video_encode_args(output_cfg) -> List[str]:
     codec = getattr(output_cfg, "video_codec", "libx264")
     if codec == "h264_nvenc":
@@ -621,3 +681,37 @@ def _video_encode_args(output_cfg) -> List[str]:
                  "-cq", str(output_cfg.crf), "-b:v", "0", "-pix_fmt", "yuv420p"]
     return ["-c:v", codec, "-preset", output_cfg.preset,
              "-crf", str(output_cfg.crf), "-pix_fmt", "yuv420p"]
+
+def concat_audio_silence_then_clip(silence_duration: float, clip_path: Path, out_path: Path) -> Path:
+    """Prepend `silence_duration` seconds of silence onto an audio clip —
+    used to give narration a small breathing gap before it starts speaking
+    instead of cutting in at frame 0."""
+    out_path = Path(out_path)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    if silence_duration <= 0:
+        shutil.copyfile(clip_path, out_path)
+        return out_path
+    silence_path = out_path.parent / f"_lead_silence_{out_path.stem}.wav"
+    make_silence_wav(silence_duration, silence_path)
+    run_ffmpeg([
+        "-i", str(silence_path), "-i", str(clip_path),
+        "-filter_complex", "[0:a][1:a]concat=n=2:v=0:a=1[aout]",
+        "-map", "[aout]",
+        str(out_path),
+    ], desc="prepend lead silence")
+    return out_path
+
+def render_pause_clip(image: Image.Image, duration: float, cfg: AppConfig, out_path: Path) -> Path:
+    """A brief static, caption-free hold on the last scene's image — used as
+    a breathing pause between the story ending and the branding/CTA card
+    appearing, so it doesn't feel like it snaps in."""
+    width, height = cfg.resolution.width, cfg.resolution.height
+    fps = cfg.resolution.fps
+    n_frames = max(int(round(duration * fps)), 1)
+    still = ImageOps.fit(image.convert("RGB"), (width, height), Image.LANCZOS)
+
+    def frame_gen():
+        for _ in range(n_frames):
+            yield still
+
+    return frames_to_video(frame_gen(), width, height, fps, out_path, cfg.output)

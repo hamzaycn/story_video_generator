@@ -38,10 +38,11 @@ brand:
   secondary_color: [255, 176, 59]
   background_color: [18, 14, 38]
   text_color: [255, 255, 255]
-  logo_path: assets/branding/logo.png
-  qr_code_path: assets/branding/qr_code.jpg                    # optional: path to a QR code / app-store badge image
+  logo_path: null                                     # or assets/branding/logo_small.png if you have one
+  outro_card_path: assets/branding/logo.png            # your full app+QR card image
+  qr_code_path: null
   cta_text: "Download the app to create your own stories!"
-  title_font: null                       # falls back to per-script default if unset
+  title_font: null
   intro_duration: 3.0
   outro_duration: 4.0
   narrate_intro: true
@@ -64,10 +65,12 @@ output:
 timing:
   min_scene_duration_s: 3.0
   transition_duration_s: 0.5
+  intro_lead_silence_s: 0.4
+  outro_lead_pause_s: 0.6
 
 paths:
   cache_dir: cache
   output_dir: output
   assets_dir: assets
 
-default_voice: hannah
+default_voice: af_bella

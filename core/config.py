@@ -53,14 +53,15 @@ class BrandConfigModel(BaseModel):
     secondary_color: Tuple[int, int, int] = (255, 176, 59)
     background_color: Tuple[int, int, int] = (18, 14, 38)
     text_color: Tuple[int, int, int] = (255, 255, 255)
-    logo_path: Optional[str] = "assets/branding/logo.png"
+    logo_path: Optional[str] = "assets/branding/logo_small.png"   # small watermark used on the intro card
+    outro_card_path: Optional[str] = "assets/branding/logo.png"   # NEW — full pre-made download/QR card for the outro
     qr_code_path: Optional[str] = None
     cta_text: str = "Download the app to create your own stories!"
     title_font: Optional[str] = None
-    intro_duration: float = 3.0     # floor -- real duration will stretch to fit narration
+    intro_duration: float = 3.0
     outro_duration: float = 4.0
-    narrate_intro: bool = True                                     # NEW
-    intro_narration_template: str = "{title}. A {category} story."  # NEW
+    narrate_intro: bool = True
+    intro_narration_template: str = "{title}. A {category} story."
 
 
 class AudioConfigModel(BaseModel):
@@ -80,6 +81,8 @@ class OutputConfigModel(BaseModel):
 class TimingConfigModel(BaseModel):
     min_scene_duration_s: float = 3.0
     transition_duration_s: float = 0.5
+    intro_lead_silence_s: float = 0.4     # NEW — beat of silence before narration begins
+    outro_lead_pause_s: float = 0.6   
 
 
 class PathsConfigModel(BaseModel):

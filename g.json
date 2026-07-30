@@ -1,0 +1,444 @@
+{
+  "stories": [
+    {
+      "title": "The Glowing Leaf Trail",
+      "category": "Adventure",
+      "characterDescription": "A tiny orange fox wearing a green scarf, with a round body and two dot eyes.",
+      "scenes": [
+        {
+          "sceneNumber": 1,
+          "text": "Pip the tiny orange fox with a green scarf trotted under tall pines as the sun slid low. Three deer watched quietly while Pip searched for a glowing leaf to light the path home.",
+          "imagePrompt": "Tiny orange fox wearing green scarf, two dot eyes, walking beneath tall pine trees at sunset, warm golden light, determined mood, searching forest floor for a glowing leaf."
+        },
+        {
+          "sceneNumber": 2,
+          "text": "At the creek, four frogs pointed with croaks toward a shimmer in the ferns. Pip sniffed, leaped over roots, and found a leaf sparkling like a tiny lantern. It warmed his paws without burning.",
+          "imagePrompt": "Cute orange fox with green scarf jumps over roots near sparkling creek, frogs nearby, soft afternoon light, excited mood, discovering a lantern-like glowing leaf among ferns."
+        },
+        {
+          "sceneNumber": 3,
+          "text": "With the leaf held high, Pip followed the dim trail. Three sleepy owls blinked from branches as the forest turned gold. Soon the familiar burrow door appeared, and the glow faded into a happy dusk.",
+          "imagePrompt": "Orange fox holds glowing leaf aloft while walking darkening forest path, owls on branches, twilight blue lighting, cozy adventurous mood, heading toward a small burrow doorway."
+        }
+      ]
+    },
+    {
+      "title": "Tula and the Tiny Crab",
+      "category": "Friendship",
+      "characterDescription": "A little olive-green turtle with a pale yellow shell patch and two dot eyes.",
+      "scenes": [
+        {
+          "sceneNumber": 1,
+          "text": "Tula the little turtle waddled along the beach when she heard sniffling. A baby crab was stuck near a tide pool, clicking nervously. Three seagulls watched as Tula promised to help find the crab's family.",
+          "imagePrompt": "Little olive turtle with yellow shell patch approaches frightened baby crab by tide pool, sunny beach setting, gentle morning light, concerned mood, offering help."
+        },
+        {
+          "sceneNumber": 2,
+          "text": "They followed tiny tracks past shells and seaweed. Four sandpipers hopped beside them, peeping clues. When a wave erased the trail, Tula used her smooth shell as a shield so the baby crab could cross safely.",
+          "imagePrompt": "Olive turtle shelters baby crab with her shell as a wave rolls in, beach with seaweed and shells, bright daylight, protective mood, sandpipers watching."
+        },
+        {
+          "sceneNumber": 3,
+          "text": "Near a rock arch, they heard cheerful clicking. Three big crabs waved their claws, and the baby crab rushed in. Tula smiled with her two dot eyes as the family made a thank-you circle in the sand.",
+          "imagePrompt": "Olive turtle and baby crab meet crab family near rock arch, warm late-afternoon light, joyful mood, crabs clicking, footprints in sand, storybook illustration."
+        }
+      ]
+    },
+    {
+      "title": "Puff and the Rainbow Bridge",
+      "category": "Fantasy",
+      "characterDescription": "A fluffy white cloud with a tiny blue bow and two dot eyes.",
+      "scenes": [
+        {
+          "sceneNumber": 1,
+          "text": "Puff, a fluffy cloud with a tiny blue bow, drifted above the mountains. The sky felt wide and quiet. Three eagles glided below while Puff wondered what hid behind the tallest peak, beyond the misty edge.",
+          "imagePrompt": "Fluffy white cloud with tiny blue bow and two dot eyes drifts above rugged mountains, early morning pastel light, calm mood, watching eagles glide below."
+        },
+        {
+          "sceneNumber": 2,
+          "text": "A sudden sunbeam poked through and painted colors in the air. Four mountain goats stared upward as Puff floated closer. There, a rainbow bridge shimmered between two ridges, like a secret doorway made of light.",
+          "imagePrompt": "Cute fluffy cloud approaches shimmering rainbow bridge between mountain ridges, bright sunbeam lighting, magical mood, goats on rocky ledge watching, colors vivid in clear sky."
+        },
+        {
+          "sceneNumber": 3,
+          "text": "Puff hovered beside the bridge and let misty drops sparkle along its stripes. Three small birds fluttered across, chirping thanks. When evening cooled the peaks, Puff carried the bridge's colors in memory, glowing softly above home.",
+          "imagePrompt": "Fluffy cloud hovers beside rainbow bridge, mist sparkling on rainbow stripes, twilight cool light, gentle joyful mood, small birds crossing the bridge, storybook style."
+        }
+      ]
+    },
+    {
+      "title": "Buzzy Finds the Sweetest Flower",
+      "category": "Nature",
+      "characterDescription": "A curious golden bee with a tiny leaf backpack and two dot eyes.",
+      "scenes": [
+        {
+          "sceneNumber": 1,
+          "text": "Buzzy the golden bee zipped out of the hive with a tiny leaf backpack. The meadow smelled like sunshine. Three ladybugs waved from a blade of grass as Buzzy promised to bring back the sweetest nectar for everyone.",
+          "imagePrompt": "Golden bee with striped body, leaf backpack, two dot eyes, flying from hive into sunny meadow, bright morning light, eager mood, ladybugs on grass watching."
+        },
+        {
+          "sceneNumber": 2,
+          "text": "She tasted clover, then lavender, then a rose, taking careful notes in her mind. Four bumblebees hummed nearby, cheering. At last, Buzzy followed a sweet breeze to a hidden sunflower, warm as a little sun.",
+          "imagePrompt": "Curious golden bee hovers among wildflowers, sampling clover and lavender, warm midday light, playful mood, bumblebees nearby, discovering a tall sunflower glowing in the breeze."
+        },
+        {
+          "sceneNumber": 3,
+          "text": "Buzzy filled her honey pouch and flew home in looping dances. Three young bees waited at the entrance, wiggling with excitement. Inside, the hive buzzed happily as Buzzy shared the sunflower's secret with gentle hums.",
+          "imagePrompt": "Golden bee returns to hive carrying nectar, sunset amber lighting, joyful busy mood, young bees at entrance, swirling flight path, soft storybook illustration, flowers blurred behind."
+        }
+      ]
+    },
+    {
+      "title": "Pico and the Lost Snowflake",
+      "category": "Winter",
+      "characterDescription": "A small black-and-white penguin wearing blue earmuffs, with two dot eyes.",
+      "scenes": [
+        {
+          "sceneNumber": 1,
+          "text": "Pico the penguin waddled across the icy shore, his blue earmuffs flapping. The air felt strangely warm. Three seals watched as Pico noticed a single snowflake spinning in the wind, far from the snowy clouds.",
+          "imagePrompt": "Small penguin with blue earmuffs and two dot eyes stands on icy shore, pale winter sunlight, concerned mood, watching a lone snowflake swirl above melting ice."
+        },
+        {
+          "sceneNumber": 2,
+          "text": "The snowflake drifted toward dark water. Four puffins called warnings from an ice ledge. Pico slid on his belly, reached out a flipper, and caught the snowflake on a smooth pebble, keeping it cold and safe.",
+          "imagePrompt": "Penguin slides on belly across ice toward dark water, catching a drifting snowflake on a pebble, brisk wind, bright cold lighting, puffins on ledge, tense rescue moment."
+        },
+        {
+          "sceneNumber": 3,
+          "text": "Pico hurried to a shaded snowbank beside a glacier wall. Three arctic hares hopped close as he tucked the snowflake into the soft snow. More flakes soon swirled down, and winter's sparkle returned to the shore.",
+          "imagePrompt": "Penguin places snowflake into shaded snowbank near glacier wall, twilight blue light, relieved happy mood, arctic hares watching, fresh snow beginning to fall, storybook illustration."
+        }
+      ]
+    },
+    {
+      "title": "Ollie's Seashell Celebration",
+      "category": "Ocean",
+      "characterDescription": "A small purple octopus wearing a star-shaped party hat, with two dot eyes.",
+      "scenes": [
+        {
+          "sceneNumber": 1,
+          "text": "Ollie the purple octopus adjusted a starry party hat and peeked from his coral nook. Tonight was the reef's celebration. Three clownfish watched as Ollie set off to collect the brightest seashells for sparkling decorations.",
+          "imagePrompt": "Small purple octopus with star party hat and two dot eyes leaves coral nook, underwater reef setting, soft turquoise light, excited mood, clownfish watching as he starts shell hunt."
+        },
+        {
+          "sceneNumber": 2,
+          "text": "He swam through waving kelp and spotted a shell garden beneath a rock. Four sea stars clung nearby like helpers. Ollie gently gathered swirly shells, striped shells, and one shell that chimed when tapped.",
+          "imagePrompt": "Purple octopus gathers colorful spiral seashells among kelp and rocks, dappled sunlight rays underwater, calm focused mood, sea stars nearby, gentle bubbles rising, storybook style."
+        },
+        {
+          "sceneNumber": 3,
+          "text": "Back at the reef plaza, Ollie tied shells onto seaweed ribbons. Three lanternfish glowed brighter to help. When friends arrived, the decorations twinkled with every bubble, and Ollie's two dot eyes shone with pride.",
+          "imagePrompt": "Purple octopus decorates reef plaza with seashell garlands on seaweed ribbons, lanternfish glowing, festive warm underwater lighting, joyful mood, bubbles sparkling around, celebration beginning."
+        }
+      ]
+    },
+    {
+      "title": "Sunny and the Riddle Lock",
+      "category": "Problem Solving",
+      "characterDescription": "A cheerful brown squirrel with an acorn pendant and two dot eyes.",
+      "scenes": [
+        {
+          "sceneNumber": 1,
+          "text": "Sunny the squirrel bounced to an old oak where a tiny door sat high on the trunk. A lock dangled with a carved question mark. Three chipmunks watched as Sunny read the first riddle scratched on bark.",
+          "imagePrompt": "Cheerful brown squirrel with acorn pendant and two dot eyes stands at base of old oak, looking up at tiny locked treehouse door, morning forest light, curious mood."
+        },
+        {
+          "sceneNumber": 2,
+          "text": "The riddle said, I fall but never break. Four owls hooted softly from branches. Sunny giggled, picked up a feather, and clicked it into a leaf-shaped slot. The lock glimmered, then offered another riddle.",
+          "imagePrompt": "Brown squirrel holds feather near riddle lock on oak trunk, owls watching from branches, dappled daylight, playful problem-solving mood, leaf-shaped slot glowing, storybook illustration."
+        },
+        {
+          "sceneNumber": 3,
+          "text": "After three clever answers, the lock popped open with a pleasant ping. Three squirrels peeked from nearby logs as Sunny climbed inside. The secret treehouse held maps, pinecone pillows, and a window facing the whole forest.",
+          "imagePrompt": "Squirrel climbs into open secret treehouse in oak, warm afternoon light, cozy adventurous mood, maps and pinecone pillows inside, forest view through round window, friends peeking below."
+        }
+      ]
+    },
+    {
+      "title": "Prickle Learns to Share",
+      "category": "Kindness",
+      "characterDescription": "A small round green cactus in a clay pot with a single pink flower and two dot eyes.",
+      "scenes": [
+        {
+          "sceneNumber": 1,
+          "text": "Prickle the cactus sat in a clay pot on a sunny desert porch, feeling lonely in the quiet sand. Three beetles marched by with crunchy footsteps. Prickle wished for friends but only had a tiny cup of water.",
+          "imagePrompt": "Small round cactus in clay pot with pink flower and two dot eyes sits on desert porch, bright sun, lonely mood, sand dunes and sparse plants, beetles passing nearby."
+        },
+        {
+          "sceneNumber": 2,
+          "text": "A thirsty lizard stopped, panting. Four quail watched from a shade bush. Prickle's spines trembled, but he tipped his cup toward the lizard anyway. The lizard drank carefully and smiled, leaving a cool pebble as thanks.",
+          "imagePrompt": "Round cactus offers a tiny water cup to thirsty lizard, desert shade bush nearby, warm afternoon light, kind gentle mood, quail watching, pebble on ground, storybook illustration."
+        },
+        {
+          "sceneNumber": 3,
+          "text": "The next dawn, three rabbits arrived with dew drops on leaves, and the lizard returned with a tiny shade cloth. Prickle didn't feel lonely anymore. Sharing water had grown something bigger than a flower: a small circle of friends.",
+          "imagePrompt": "Cactus with pink flower surrounded by rabbit friends and lizard bringing shade cloth, early morning soft light, happy welcoming mood, dew on leaves, desert porch scene, cozy colors."
+        }
+      ]
+    },
+    {
+      "title": "Teeny's Special Sound",
+      "category": "Courage",
+      "characterDescription": "A tiny teal dragon with a yellow belly, small wings, and two dot eyes.",
+      "scenes": [
+        {
+          "sceneNumber": 1,
+          "text": "Teeny the teal dragon stood on a hill and tried the biggest roar. Only a squeak came out. Three sheep looked up, surprised but not scared. Teeny stomped, determined to sound brave like the older dragons.",
+          "imagePrompt": "Tiny teal dragon with yellow belly and two dot eyes stands on grassy hill, trying to roar, soft daylight, funny determined mood, sheep watching below, storybook illustration."
+        },
+        {
+          "sceneNumber": 2,
+          "text": "He practiced behind boulders, puffing his cheeks and flapping his wings. Four sparrows perched nearby, listening. Each roar became a different sound: chirp, hum, and drum. Teeny noticed the hum made flowers sway in time.",
+          "imagePrompt": "Teal dragon practices roaring behind gray boulders, wings fluttering, sparrows perched nearby, bright afternoon light, curious mood, wildflowers swaying as his humming breath vibrates the air."
+        },
+        {
+          "sceneNumber": 3,
+          "text": "At the meadow, Teeny hummed again, and fireflies blinked along the rhythm. Three rabbits clapped their paws. Teeny realized his talent was not roaring loud; it was making music with his breath, bright and gentle.",
+          "imagePrompt": "Tiny teal dragon hums musically in meadow, fireflies blinking to rhythm, warm sunset glow, joyful discovery mood, rabbits clapping, gentle magical atmosphere, soft watercolor storybook style."
+        }
+      ]
+    },
+    {
+      "title": "Flick the Night Guide",
+      "category": "Bedtime",
+      "characterDescription": "A glowing yellow-green firefly with a tiny cape and two dot eyes.",
+      "scenes": [
+        {
+          "sceneNumber": 1,
+          "text": "Flick the firefly fluttered above the forest path as wind shook the branches. The moon hid behind clouds, making everything dark. Three mice huddled under a leaf, and Flick offered to guide them to their burrow.",
+          "imagePrompt": "Glowing yellow-green firefly with tiny cape and two dot eyes hovers over dark forest path, windy night mood, dim moonlight, mice under leaf, offering guidance like a lantern."
+        },
+        {
+          "sceneNumber": 2,
+          "text": "Flick's glow bobbed like a tiny lantern. Four deer joined the line, stepping carefully over roots. A gust tried to blow them off course, but Flick circled back, lighting puddles and pointing the safe way with bright loops.",
+          "imagePrompt": "Firefly leads a line of deer along rooty forest trail, rain puddles reflecting glow, strong wind, dramatic night lighting, protective mood, looping flight path showing safe direction."
+        },
+        {
+          "sceneNumber": 3,
+          "text": "At last, the wind calmed near a hollow log. Three owls blinked sleepily as the animals slipped inside to rest. Flick hovered at the entrance until everyone was safe, then dimmed to a cozy sparkle.",
+          "imagePrompt": "Tiny firefly hovers at hollow log entrance as animals shelter inside, calm after storm, soft twilight lighting, peaceful bedtime mood, owls on branch watching, gentle storybook illustration."
+        }
+      ]
+    },
+    {
+      "title": "Rin Builds a Reuse Playground",
+      "category": "Environment",
+      "characterDescription": "A playful gray raccoon with a patchwork satchel and two dot eyes.",
+      "scenes": [
+        {
+          "sceneNumber": 1,
+          "text": "Rin the raccoon trotted into the park with a patchwork satchel. The old corner looked boring and empty. Three pigeons watched as Rin spotted bottle caps, a broken hoop, and a smooth plank, treasures for building something new.",
+          "imagePrompt": "Playful gray raccoon with patchwork satchel and two dot eyes explores a park corner, morning light, curious hopeful mood, picking up bottle caps and a broken hoop near a bench."
+        },
+        {
+          "sceneNumber": 2,
+          "text": "He sorted the finds near a bench, thinking hard. Four squirrels chattered advice from a tree. Rin tied the hoop to the plank, turning it into a swing, then stacked caps into colorful stepping-stones across the grass.",
+          "imagePrompt": "Gray raccoon assembles recycled swing from plank and hoop, grassy park setting, bright midday light, creative mood, squirrels watching from tree, colorful caps arranged as stepping-stones."
+        },
+        {
+          "sceneNumber": 3,
+          "text": "By afternoon, the playground sparkled with reused surprises. Three bunnies bounced along the stepping-stones while Rin pushed the swing gently. Everyone laughed, and the park felt alive again, all because Rin saw trash as treasure.",
+          "imagePrompt": "Raccoon proudly watches animals play on upcycled playground, warm afternoon sunshine, joyful community mood, bunnies hopping on cap stones, swing moving gently, soft storybook illustration."
+        }
+      ]
+    },
+    {
+      "title": "Kobi's Forest Lullaby",
+      "category": "Music",
+      "characterDescription": "A little gray koala wearing a knitted moon hat, with two dot eyes.",
+      "scenes": [
+        {
+          "sceneNumber": 1,
+          "text": "Kobi the koala yawned under eucalyptus trees. Sleep wanted to come, but the forest sounded too busy. Three kookaburras laughed loudly overhead. Kobi decided to search for the perfect lullaby, one soft enough to tuck night in.",
+          "imagePrompt": "Little gray koala with knitted moon hat and two dot eyes sits in eucalyptus tree at dusk, listening to noisy forest, warm twilight light, thoughtful sleepy mood, birds above."
+        },
+        {
+          "sceneNumber": 2,
+          "text": "He listened near a creek where water whispered over stones. Four frogs sang plunk-plunk notes. Kobi hummed along, then added a gentle sway of leaves with his paws, mixing creek, frogs, and breeze into one calm tune.",
+          "imagePrompt": "Koala beside a small creek listens to frogs singing, moon hat visible, soft evening light, peaceful mood, paws gently swaying leaves, water sparkling over stones, storybook illustration."
+        },
+        {
+          "sceneNumber": 3,
+          "text": "Back on his branch, Kobi sang the new lullaby to the darkening sky. Three possums peeked out, growing quiet. The forest softened, as if wrapped in a blanket. With two dot eyes closing, Kobi finally drifted to sleep.",
+          "imagePrompt": "Koala curls on tree branch singing lullaby, night settling, dim blue lighting, cozy calm mood, possums peeking from nearby branches, stars faint, soft watercolor style."
+        }
+      ]
+    },
+    {
+      "title": "Luma Wakes the Meadow",
+      "category": "Spring",
+      "characterDescription": "A colorful butterfly with rainbow wings, a tiny pollen pouch, and two dot eyes.",
+      "scenes": [
+        {
+          "sceneNumber": 1,
+          "text": "Luma the butterfly fluttered over a sleepy meadow where buds stayed closed. The air felt too quiet. Three snails watched from a stone as Luma opened her tiny pollen pouch and promised to wake the flowers with gentle help.",
+          "imagePrompt": "Rainbow-winged butterfly with two dot eyes hovers above closed flower buds in a quiet meadow, early spring morning light, hopeful mood, snails on stone watching, pollen pouch visible."
+        },
+        {
+          "sceneNumber": 2,
+          "text": "She danced from blossom to blossom, dusting each bud with golden pollen. Four finches hopped nearby, chirping encouragement. Luma tickled the petals with her wing tips until one tulip yawned open, then another followed.",
+          "imagePrompt": "Colorful butterfly dusts golden pollen onto buds, finches nearby, bright gentle sunlight, lively mood, petals beginning to open, wild grass swaying, soft storybook illustration."
+        },
+        {
+          "sceneNumber": 3,
+          "text": "Soon the meadow glowed with colors and sweet smells. Three rabbits bounced between fresh blooms, careful not to squish them. Luma spun happily in the warm breeze, knowing her small work had turned the whole field into spring.",
+          "imagePrompt": "Rainbow butterfly twirls over a meadow full of blooming flowers, warm afternoon glow, joyful spring mood, rabbits hopping carefully among blossoms, sparkling pollen in air, watercolor style."
+        }
+      ]
+    },
+    {
+      "title": "Willa and the Bubble Trail",
+      "category": "Exploration",
+      "characterDescription": "A brave young blue whale with small white spots and two dot eyes.",
+      "scenes": [
+        {
+          "sceneNumber": 1,
+          "text": "Willa the young whale swam through open sea, feeling a bit small in the wide blue. Suddenly, a trail of sparkling bubbles rose ahead. Three dolphins watched, curious. Willa decided to follow the bubbles and see where they led.",
+          "imagePrompt": "Young blue whale with white spots and two dot eyes swims in open ocean following a sparkling bubble trail, bright clear water, adventurous mood, dolphins watching in distance, storybook illustration."
+        },
+        {
+          "sceneNumber": 2,
+          "text": "The bubbles drifted between tall kelp towers. Four sea turtles floated nearby like slow balloons. Willa pushed gently through, careful not to bump anything. The water brightened, and she heard a soft tinkling, like shells tapping together.",
+          "imagePrompt": "Blue whale glides through tall kelp forest following bubbles, sunbeams filtering underwater, calm curious mood, sea turtles drifting nearby, kelp leaves swaying, soft watercolor style."
+        },
+        {
+          "sceneNumber": 3,
+          "text": "Behind a curtain of kelp, a hidden coral garden bloomed in reds and purples. Three tiny seahorses peeked out as Willa circled in awe. She blew one joyful bubble ring, then memorized the path so she could return again.",
+          "imagePrompt": "Young whale discovers hidden coral garden behind kelp curtain, vivid coral colors, gentle glowing light, wonder-filled mood, seahorses peeking, whale blowing bubble ring, storybook illustration."
+        }
+      ]
+    },
+    {
+      "title": "Milo's Tall Dream",
+      "category": "Dreams",
+      "characterDescription": "A tiny red-capped mushroom with white spots and two dot eyes.",
+      "scenes": [
+        {
+          "sceneNumber": 1,
+          "text": "Milo the tiny mushroom peeked from the damp forest floor and sighed. Ferns towered above like green umbrellas. Three ants marched past as Milo whispered his dream: to be the tallest plant in the whole forest, just once.",
+          "imagePrompt": "Tiny red-capped mushroom with white spots and two dot eyes stands on damp forest floor among tall ferns, soft morning light, dreamy mood, ants marching nearby, storybook illustration."
+        },
+        {
+          "sceneNumber": 2,
+          "text": "He tried stretching by standing on a pebble and holding a fallen twig like a pole. Four butterflies drifted around, amused. Still, the trees stayed taller. Milo noticed, though, that his cap sheltered tiny bugs from raindrops.",
+          "imagePrompt": "Red-capped mushroom balances on pebble holding a twig like a pole, butterflies fluttering, filtered daylight through trees, humorous hopeful mood, trying to look taller on forest floor."
+        },
+        {
+          "sceneNumber": 3,
+          "text": "That evening, three beetles gathered under Milo's cap, safe and dry. Milo didn't feel small anymore. He couldn't touch the sky, but he could make a cozy roof. The forest seemed taller when kindness grew inside him.",
+          "imagePrompt": "Tiny mushroom shelters beetles under its cap during light rain, cozy twilight lighting, warm caring mood, droplets on leaves, forest floor close-up, soft watercolor storybook style."
+        }
+      ]
+    },
+    {
+      "title": "Drip's Journey to the Sea",
+      "category": "Weather",
+      "characterDescription": "A plump blue raindrop with two dot eyes and a shiny sparkle.",
+      "scenes": [
+        {
+          "sceneNumber": 1,
+          "text": "Drip the raindrop wobbled on the edge of a gray cloud, excited and a little nervous. Below, gardens waited. Three swallows swooped past as Drip let go, falling with a whoosh toward thirsty leaves and dusty soil.",
+          "imagePrompt": "Plump blue raindrop with two dot eyes clings to cloud edge, looking down at gardens, overcast sky, hopeful mood, swallows flying nearby, beginning to fall."
+        },
+        {
+          "sceneNumber": 2,
+          "text": "He splashed onto a carrot patch and soaked in, tickling roots awake. Four earthworms wriggled nearby, happy. Drip slid from root to root, helping the plants drink. Then he trickled into a small stream, joining other drops.",
+          "imagePrompt": "Blue raindrop splashes into vegetable garden soil, roots and seedlings nearby, bright rain-washed daylight, helpful cheerful mood, earthworms wriggling, water trickling toward a stream, storybook illustration."
+        },
+        {
+          "sceneNumber": 3,
+          "text": "The stream became a river, and the river sang into the sea. Three crabs watched from a rock as Drip arrived, salty and brave. He waved goodbye to land, knowing he would rise again someday, ready to help once more.",
+          "imagePrompt": "Raindrop rides a river into the sea, waves sparkling, sunset orange light, adventurous peaceful mood, crabs on rock watching, water swirling around, soft watercolor style."
+        }
+      ]
+    },
+    {
+      "title": "Oaky's Season Surprises",
+      "category": "Seasons",
+      "characterDescription": "A sturdy oak tree with two small knot dot-eyes and a scarf of fallen leaves around its trunk.",
+      "scenes": [
+        {
+          "sceneNumber": 1,
+          "text": "Oaky the friendly tree rustled fresh buds as spring arrived. Three squirrels sat on his roots, wondering why the world kept changing. Oaky shook his leafy scarf and told them every season was a new kind of surprise.",
+          "imagePrompt": "Friendly oak tree with leaf scarf and two knot dot-eyes stands in spring forest, buds appearing, soft morning light, gentle mood, squirrels sitting on roots listening, storybook illustration."
+        },
+        {
+          "sceneNumber": 2,
+          "text": "In summer, four rabbits lounged in Oaky's shade, listening to bees. When autumn came, Oaky dropped golden leaves like confetti. The rabbits gasped, and Oaky explained that letting go made room for new growth later.",
+          "imagePrompt": "Oak tree provides cool shade in summer, rabbits resting beneath, then golden leaves falling like confetti, warm late-afternoon light, comforting mood, forest clearing setting, watercolor storybook style."
+        },
+        {
+          "sceneNumber": 3,
+          "text": "Winter wind arrived, and Oaky stood bare but calm. Three fox kits huddled near his trunk, worried the leaves were gone forever. Oaky pointed with a creaking branch to tiny buds sleeping, ready for spring's return.",
+          "imagePrompt": "Bare oak tree in winter with leaf scarf remnants, fox kits huddled by trunk, cool blue twilight light, reassuring mood, tiny buds on branches visible, quiet snowy forest, storybook illustration."
+        }
+      ]
+    },
+    {
+      "title": "Hazel's Brave Picnic",
+      "category": "Emotions",
+      "characterDescription": "A small brown hedgehog wearing a checkered apron, with two dot eyes.",
+      "scenes": [
+        {
+          "sceneNumber": 1,
+          "text": "Hazel the hedgehog carried a tiny basket and wore a checkered apron. She wanted to host a picnic, but her belly felt fluttery. Three ducks watched from the pond as Hazel gathered berries and crunchy leaves for salad.",
+          "imagePrompt": "Small brown hedgehog with checkered apron and two dot eyes gathers berries near pond, soft morning sunlight, nervous hopeful mood, ducks watching, picnic basket in paws, storybook illustration."
+        },
+        {
+          "sceneNumber": 2,
+          "text": "At the clearing, four chipmunks scampered over, asking what smelled so good. Hazel hid behind her basket, shy. Then she remembered her plan and laid out acorn cups and berry rolls, inviting them with a quiet nod.",
+          "imagePrompt": "Hedgehog sets picnic blanket in forest clearing, offering acorn cups and berry rolls to chipmunks, bright midday light, shy gentle mood, leaves and flowers around, watercolor storybook style."
+        },
+        {
+          "sceneNumber": 3,
+          "text": "Soon three more friends arrived, and the blanket filled with happy crunches. Hazel spoke a little louder each minute, sharing jokes about wiggly worms. When the sun dipped, everyone thanked her, and Hazel's shyness felt smaller than a crumb.",
+          "imagePrompt": "Hedgehog smiles at lively picnic with small animal friends, warm late-afternoon light, joyful friendly mood, blanket with snacks, friends chatting, trees glowing softly, storybook illustration."
+        }
+      ]
+    },
+    {
+      "title": "Hank's Helpful Machines",
+      "category": "Creativity",
+      "characterDescription": "A curious tan hamster wearing round goggles, with two dot eyes.",
+      "scenes": [
+        {
+          "sceneNumber": 1,
+          "text": "Hank the hamster looked at his messy burrow and sighed. Seeds were scattered everywhere, and his water cup kept tipping. Three moles peeked in, giggling. Hank adjusted his round goggles and decided to invent helpful, silly machines.",
+          "imagePrompt": "Tan hamster with round goggles and two dot eyes stands in messy burrow with scattered seeds, soft underground lamplight, determined mood, moles peeking in, planning inventions."
+        },
+        {
+          "sceneNumber": 2,
+          "text": "He built a seed-scooper from a spoon and a pinecone wheel. Four field mice watched as it rolled, gathering crumbs into a neat pile. Next he made a pebble-stopper for the cup, so it stayed steady even when bumped.",
+          "imagePrompt": "Hamster assembles a seed-scooper machine from spoon and pinecone wheel, burrow workshop setting, bright warm light, playful inventing mood, field mice watching, crumbs being collected neatly."
+        },
+        {
+          "sceneNumber": 3,
+          "text": "When the burrow sparkled clean, three friends tried the machines and cheered. Hank's cheeks warmed with pride. He drew simple plans in the dust so everyone could copy them. Cleaning still took time, but now it felt like play.",
+          "imagePrompt": "Goggled hamster shows friends simple cleaning machines in tidy burrow, cozy evening light, proud happy mood, small animals cheering, diagrams drawn in dust, storybook illustration."
+        }
+      ]
+    },
+    {
+      "title": "Beep in the Gearleaf Forest",
+      "category": "Science Fiction",
+      "characterDescription": "A tiny tin robot bird with a leaf-shaped antenna and two dot eyes.",
+      "scenes": [
+        {
+          "sceneNumber": 1,
+          "text": "Beep the tiny robot bird whirred at the edge of a magical forest, his leaf-shaped antenna twitching. Trees glowed with mossy lights. Three butterflies hovered nearby as Beep tested his wings, ready to explore where nature and gears met.",
+          "imagePrompt": "Tiny tin robot bird with leaf-shaped antenna and two dot eyes stands at glowing forest edge, mossy lights on trees, early evening mood, butterflies nearby, wings spread for first flight."
+        },
+        {
+          "sceneNumber": 2,
+          "text": "Inside, vines wrapped around old metal arches like friendly ribbons. Four squirrels watched as Beep found a wind-up flower that had stopped turning. He gently oiled its hinge with a drop of sap, and the flower spun, chiming softly.",
+          "imagePrompt": "Robot bird oils a stuck wind-up flower among vines and metal arches, soft green forest light, gentle helpful mood, squirrels watching, flower beginning to spin and chime, storybook style."
+        },
+        {
+          "sceneNumber": 3,
+          "text": "As evening fell, the forest lights twinkled brighter. Three owls perched above while Beep sang a beepy tune, and the wind-up flowers clicked along. Beep realized he did not need to choose between worlds; he could help them cooperate.",
+          "imagePrompt": "Tin robot bird sings beside spinning wind-up flowers in magical forest clearing, twilight lighting with twinkling moss, peaceful hopeful mood, owls perched above, nature and technology harmonizing, watercolor illustration."
+        }
+      ]
+    }
+  ]
+}

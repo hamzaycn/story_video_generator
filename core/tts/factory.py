@@ -12,7 +12,8 @@ from typing import Dict
 
 from .base import TTSProvider, UnsupportedLanguageError
 from .google_provider import GoogleCloudTTSProvider
-from .groq_provider import GroqTTSProvider
+# from .groq_provider import GroqTTSProvider
+from .kokoro_provider import KokoroTTSProvider
 
 logger = logging.getLogger("story_video_generator")
 
@@ -30,10 +31,7 @@ def get_tts_provider(language: str) -> TTSProvider:
     prefix = language.split("-")[0].lower()
 
     if prefix == "en":
-        key = "groq-english"
-        if key not in _provider_cache:
-            _provider_cache[key] = GroqTTSProvider()
-        return _provider_cache[key]
+        return KokoroTTSProvider()
 
     # Everything else routes to the (stub) Google Cloud provider for now.
     key = "google-cloud"

@@ -61,6 +61,7 @@ def main(
     voice: Optional[str] = typer.Option(None, "--voice", help="TTS voice name (overrides config default_voice)."),
     config: Optional[Path] = typer.Option(None, "--config", help="Path to config.yaml."),
     dry_run: bool = typer.Option(False, "--dry-run", help="Validate story/assets/fonts and estimate duration without rendering."),
+      overwrite: bool = typer.Option(False, "--overwrite", help="Regenerate even if output already exists."),  # NEW
     log_level: str = typer.Option("INFO", "--log-level", help="DEBUG, INFO, WARNING, or ERROR."),
 ) -> None:
     logging.getLogger("story_video_generator").setLevel(log_level.upper())
@@ -68,6 +69,13 @@ def main(
 
     cfg: AppConfig = load_config(config)
     resolved_voice = voice or cfg.default_voice
+    # --- 0. Idempotency check (NEW) ---
+    if output.exists() and output.stat().st_size > 0 and not overwrite and not dry_run:
+        console.print(
+            f"[yellow]Output already exists at {output} ({output.stat().st_size / 1e6:.1f} MB) "
+            f"-- skipping render. Use --overwrite to force regenerate.[/yellow]"
+        )
+        raise typer.Exit(code=0)
 
     # --- 1. Story validation ---
     try:
@@ -149,10 +157,13 @@ def main(
 
     with tempfile.TemporaryDirectory(prefix="story_video_") as tmp:
         try:
+            audio_export_dir = output.parent / f"{output.stem}_audio"
+
             result_path = assemble_video(
                 story_data, resolved_images, cfg, music, resolved_voice, output,
                 work_dir=Path(tmp), progress_cb=progress_cb,
-                cover_image=cover_image,   # NEW
+                cover_image=cover_image,
+                audio_export_dir=audio_export_dir,   # NEW
             )
         except TTSError as e:
             console.print(f"[bold red]TTS error:[/bold red] {e}")
