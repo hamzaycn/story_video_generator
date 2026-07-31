@@ -65,7 +65,7 @@ output:
 timing:
   min_scene_duration_s: 3.0
   transition_duration_s: 0.5
-  intro_lead_silence_s: 0.4
+  intro_lead_silence_s: 0.8
   outro_lead_pause_s: 0.6
 
 paths:

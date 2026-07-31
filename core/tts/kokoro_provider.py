@@ -62,7 +62,7 @@ class KokoroTTSProvider(TTSProvider):
 
         try:
             pipeline = self._get_pipeline(lang_code)
-            generator = pipeline(text, voice=voice, speed=0.9, split_pattern=r"\n+")
+            generator = pipeline(text, voice=voice, speed=0.8, split_pattern=r"\n+")
 
             chunks = [audio for _, _, audio in generator]
             if not chunks:
